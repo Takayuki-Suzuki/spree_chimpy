@@ -120,8 +120,12 @@ module Spree::Chimpy
       list.subscribe(object.email, merge_vars(object), customer: object.is_a?(Spree.user_class))
     when :unsubscribe
       list.unsubscribe(object.email)
-    when :update_member
-      list.update_member(object.email, merge_vars(object))
+    when :join_group
+      list.join_group(object)
+    when :leave_group
+      list.leave_group(object)
+    when :update_email
+      list.update_email(object)
     end
   end
 end
