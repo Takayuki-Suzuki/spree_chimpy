@@ -30,8 +30,16 @@ module Spree::Chimpy
     
     def update_member(&block)
       block.call if block
+
       return unless configured?
-      defer(:update_member)
+
+      if unsubscribing?
+        defer(:leave_group)
+      elsif subscribing? || merge_vars_changed?
+        defer(:join_group)
+      elsif @model.email_changed?
+        defer(:update_email)
+      end
     end
 
   private
