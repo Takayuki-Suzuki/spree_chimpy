@@ -27,6 +27,12 @@ module Spree::Chimpy
         defer(:subscribe)
       end
     end
+    
+    def update_member(&block)
+      block.call if block
+      return unless configured?
+      defer(:update_member)
+    end
 
   private
     def defer(event)
